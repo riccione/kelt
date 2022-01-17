@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">kelt</string>
+    <string name="home">Match</string>
+    <string name="settings_menu_item">Settings</string>
 </resources>
