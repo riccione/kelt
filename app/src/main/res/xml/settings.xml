@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory
+        android:textColor="#00838F"
+        app:title="@string/settings_menu_item">
+
+        <Preference
+            app:key="@string/settings_sign_out"
+            app:title="Sign out"
+            app:summary="Sign out from the app"/>
+
+        <Preference
+            app:key="@string/settings_delete_acc"
+            app:title="Delete Account"
+            app:summary="Delete Account and all related data"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:textColor="#00838F"
+        app:title="@string/settings_menu_item">
+
+        <Preference
+            app:key="@string/settings_feedback_key"
+            app:title="Send feedback"
+            app:summary="Report technical issues or suggest new features"/>
+
+        <Preference
+            app:key="@string/settings_version_by_key"
+            app:title="Version"
+            app:summary="@string/settings_version_default"/>
+
+    </PreferenceCategory>
+</PreferenceScreen>

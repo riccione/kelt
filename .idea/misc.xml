@@ -4,8 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/dev/android/kelt/app/src/main/res/layout/activity_main.xml" value="0.1890625" />
+        <entry key="..\:/dev/android/kelt/app/src/main/res/layout/fragment_home.xml" value="0.24094202898550723" />
         <entry key="..\:/dev/android/kelt/app/src/main/res/layout/fragment_login.xml" value="0.1609375" />
         <entry key="..\:/dev/android/kelt/app/src/main/res/menu/bottom_nav_menu.xml" value="0.18020833333333333" />
+        <entry key="..\:/dev/android/kelt/app/src/main/res/xml/settings.xml" value="0.23324275362318841" />
       </map>
     </option>
   </component>

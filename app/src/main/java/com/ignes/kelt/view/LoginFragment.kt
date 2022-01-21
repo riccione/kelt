@@ -5,56 +5,92 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
+import com.firebase.ui.auth.AuthUI
+import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
+import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.ignes.kelt.R
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 /**
- * A simple [Fragment] subclass.
- * Use the [LoginFragment.newInstance] factory method to
- * create an instance of this fragment.
+ * Handles auth for the app
  */
 class LoginFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Initialize Firebase Auth
+        auth = Firebase.auth
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LoginFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LoginFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        private const val TAG = "LoginFragment"
+        private const val RC_MULTI_FACTOR = 9005
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Check if user is signed in (non-null) and update UI accordingly.
+        val user = auth.currentUser
+        if (user != null) {
+            // go to second fragment
+            //Toast.makeText(context, "Login success", Toast.LENGTH_SHORT).show()
+            view.findNavController().navigate(R.id.action_login_dest_to_home_dest)
+        } else {
+            createSignInIntent()
+        }
+    }
+
+    // [START auth_fui_create_launcher]
+    // See: https://developer.android.com/training/basics/intents/result
+    private val signInLauncher = registerForActivityResult(
+        FirebaseAuthUIActivityResultContract()
+    ) { res ->
+        this.onSignInResult(res)
+    }
+    // [END auth_fui_create_launcher]
+
+    private fun createSignInIntent() {
+        // [START auth_fui_create_intent]
+        // Choose authentication providers
+        val providers = arrayListOf(
+            AuthUI.IdpConfig.EmailBuilder().build())
+
+        // Create and launch sign-in intent
+        val signInIntent = AuthUI.getInstance()
+            .createSignInIntentBuilder()
+            .setAvailableProviders(providers)
+            .setTosAndPrivacyPolicyUrls(
+                "https://example.com/terms.html",
+                "https://example.com/privacy.html")
+            .build()
+        signInLauncher.launch(signInIntent)
+        // [END auth_fui_create_intent]
+    }
+
+    // [START auth_fui_result]
+    private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
+        val response = result.idpResponse
+        if (result.resultCode == AppCompatActivity.RESULT_OK) {
+            // Successfully signed in
+            view?.findNavController()?.navigate(R.id.action_login_dest_to_home_dest)
+        } else {
+            // Sign in failed. If response is null the user canceled the
+            // sign-in flow using the back button. Otherwise check
+            // response.getError().getErrorCode() and handle the error.
+            Toast.makeText(context, "Login failed ${response?.error?.errorCode}", Toast.LENGTH_SHORT).show()
+        }
+    }
+    // [END auth_fui_result]
 }

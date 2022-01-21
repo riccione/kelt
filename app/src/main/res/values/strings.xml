@@ -2,4 +2,23 @@
     <string name="app_name">kelt</string>
     <string name="home">Match</string>
     <string name="settings_menu_item">Settings</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- feedback email -->
+    <string name="email" translatable="false">zeronullll@gmail.com</string>
+    <string name="subject_feedback" translatable="false">Russian words: Feedback</string>
+    <string name="subject_delete_account" translatable="false">Find in Box: delete account</string>
+    <string name="text_delete_account" translatable="false">Please delete account %1$s</string>
+    <string name="ok" translatable="false">Ok</string>
+    <string name="cancel" translatable="false">Cancel</string>
+    <string name="dialog_message" translatable="false">Account and all related data will be deleted in 48 hours. Are you sure?</string>
+    <string name="dialog_title" translatable="false">Delete Account</string>
+
+    <string name="settings_version_by_key" translatable="false">version</string>
+    <string name="settings_version_default" translatable="false">Version</string>
+    <string name="settings_feedback_key" translatable="false">feedback</string>
+
+    <string name="settings_sign_out" translatable="false">Sign out</string>
+    <string name="settings_delete_acc" translatable="false">Delete Account</string>
 </resources>
